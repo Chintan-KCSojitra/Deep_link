@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mock Login Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    button { padding: 12px 24px; font-size: 18px; cursor: pointer; }
+    input { padding: 8px 12px; font-size: 16px; width: 260px; }
+  </style>
+</head>
+<body>
+  <h1>Mock OAuth Login</h1>
+  <p>This is a fake login page for testing deep linking.</p>
+
+  <!-- Optional: let you override scheme/host/path without editing code -->
+  <p>
+    <input id="deeplink" placeholder="myapp://login" value="myapp://login"/>
+  </p>
+
+  <button onclick="login()">Login</button>
+
+  <script>
+    function generateToken(length = 16) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let token = '';
+      for (let i = 0; i < length; i++) token += chars.charAt(Math.floor(Math.random() * chars.length));
+      return token;
+    }
+    function login() {
+      const token = generateToken();
+      const base = (document.getElementById('deeplink').value || 'myapp://login').trim();
+      const url = `${base}${base.includes('?') ? '&' : '?'}token=${encodeURIComponent(token)}`;
+      window.location.href = url;
+    }
+  </script>
+</body>
+</html>
